@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -18,9 +18,6 @@ add_library(visionray STATIC
 set_target_properties(visionray PROPERTIES
 	VERSION ${PROJECT_VERSION}
 )
-
-#for travis
-add_compile_options("-std=c++14")
 
 # sdl for target
 find_package(SDL2 REQUIRED)
@@ -40,9 +37,16 @@ set_property(TARGET SDL2_ttf PROPERTY IMPORTED_LOCATION ${SDL2_TTF_LIBRARY})
 set_property(TARGET SDL2_image PROPERTY IMPORTED_LOCATION ${SDL2_IMAGE_LIBRARY})
 
 include_directories(include)
+include_directories(Void)
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
+    DESTINATION include/visionray
+    FILES_MATCHING PATTERN "*.h*"
+)
+
+install(
+    DIRECTORY ${CMAKE_SOURCE_DIR}/Void/
     DESTINATION include/visionray
     FILES_MATCHING PATTERN "*.h*"
 )
